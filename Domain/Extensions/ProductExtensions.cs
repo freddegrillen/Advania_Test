@@ -11,6 +11,7 @@ namespace Advania_Test.Domain.Extensions
             return new Product 
             {
                 Name = request.Name,
+                Category = request.Category,
                 Color = request.Color,
                 Price = request.Price,
             };
@@ -22,6 +23,7 @@ namespace Advania_Test.Domain.Extensions
             (
                 product.Id,
                 product.Name,
+                product.Category,
                 product.Color,
                 product.Price
             );

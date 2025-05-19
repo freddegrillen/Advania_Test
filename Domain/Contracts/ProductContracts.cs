@@ -2,6 +2,7 @@
 
     public record AddProductRequest(
         string Name,
+        string Category,
         string? Color,
         decimal Price
     );
@@ -9,6 +10,7 @@
     public record ProductResponse(
         int Id,
         string Name,
+        string Category,
         string? Color,
         decimal Price
         );
