@@ -28,7 +28,7 @@
     <Using Include="System.Threading.ExecutionContext" Alias="ExecutionContext" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Domain\" />
-    <Folder Include="Infrastructure\" />
+    <Folder Include="Domain\Models\" />
+    <Folder Include="Infrastructure\Data\" />
   </ItemGroup>
 </Project>
