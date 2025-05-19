@@ -5,23 +5,23 @@ using Microsoft.Extensions.Logging;
 
 namespace Advania_Test.Application.Endpoints
 {
-    public class Add_Product
+    public class AddProduct
     {
-        private readonly ILogger<Add_Product> _logger;
+        private readonly ILogger<AddProduct> _logger;
 
-        public Add_Product(ILogger<Add_Product> logger)
+        public AddProduct(ILogger<AddProduct> logger)
         {
             _logger = logger;
         }
 
-        [Function("Add_Product")]
+        [Function("AddProduct")]
         public IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
         {
-            _logger.LogInformation("Add_Product function triggered.");
+            _logger.LogInformation("AddProduct function triggered.");
             _logger.LogInformation("");
 
 
-            return new OkObjectResult("Welcome to Azure Functions!");
+            return new OkObjectResult("Product added");
         }
     }
 }
