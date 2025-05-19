@@ -15,9 +15,12 @@ namespace Advania_Test.Application.Endpoints
         }
 
         [Function("Add_Product")]
-        public IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequest req)
+        public IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
         {
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
+            _logger.LogInformation("Add_Product function triggered.");
+            _logger.LogInformation("");
+
+
             return new OkObjectResult("Welcome to Azure Functions!");
         }
     }
