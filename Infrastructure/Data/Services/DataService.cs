@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Advania_Test.Infrastructure.Data.Services
 {
-    internal class DataService : IDataService
+    internal class DataService(TableClient tableClient) : IDataService
     {
         public async Task<Product> AddProduct(Product product)
         {
 
-            var tableClient = new TableClient(Environment.GetEnvironmentVariable("Table_Storage_Connectionstring"), "Products");
-            await tableClient.CreateIfNotExistsAsync();
+            //var tableClient = new TableClient(Environment.GetEnvironmentVariable("Table_Storage_Connectionstring"), "Products");
+            //await tableClient.CreateIfNotExistsAsync();
             var entity = new TableEntity() {
                 {"PartitionKey", product.Category },
                 {"RowKey", product.Name },
@@ -26,12 +26,21 @@ namespace Advania_Test.Infrastructure.Data.Services
             };
             tableClient.AddEntity(entity);
 
-            return product; //Lägg till implementation
+            return product;
         }
 
         public async Task<IEnumerable<Product>> GetProducts()
         {
-            return new List<Product>(); //Lägg till implementation
+            List<TableEntity> entities = tableClient.Query<TableEntity>(maxPerPage: 1000).ToList<TableEntity>();
+            List<Product> products = entities.Select(e => new Product
+            {
+                Category = e.GetString("PartitionKey"),
+                Name = e.GetString("RowKey"),
+                Color = e.GetString("Color"),
+                Price = (decimal) e.GetDouble("Price") //Kolla om det här fungerar bra, kan vara strul med att spara som double.
+            }).ToList<Product>();
+            return products;
+            //return new List<Product>(); //Lägg till implementation
         }
     }
 }

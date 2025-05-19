@@ -23,7 +23,8 @@ namespace Advania_Test.Domain.Services
 
         public async Task<IEnumerable<ProductResponse>> GetProducts()
         {
-            return new List<ProductResponse>();
+            IEnumerable<Product> products = await dataService.GetProducts();
+            return products.Select(p => p.ToResponse());
         }
     }
 }
