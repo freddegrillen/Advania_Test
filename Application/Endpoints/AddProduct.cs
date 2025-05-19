@@ -18,7 +18,7 @@ namespace Advania_Test.Application.Endpoints
         public IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
         {
             _logger.LogInformation("AddProduct function triggered.");
-            _logger.LogInformation("");
+            //_logger.LogInformation("");
 
 
             return new OkObjectResult("Product added");
