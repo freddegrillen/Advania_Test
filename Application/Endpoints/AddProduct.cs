@@ -1,27 +1,38 @@
+using Advania_Test.Domain.Abstract;
+using Advania_Test.Domain.Contracts;
+using Advania_Test.Domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
+using System.Reflection;
+using System.Text.Json;
 
 namespace Advania_Test.Application.Endpoints
 {
     public class AddProduct
     {
         private readonly ILogger<AddProduct> _logger;
+        private readonly IDomainService _domainService;
 
-        public AddProduct(ILogger<AddProduct> logger)
+        public AddProduct(ILogger<AddProduct> logger, IDomainService domainService)
         {
             _logger = logger;
+            _domainService = domainService;
         }
 
         [Function("AddProduct")]
-        public IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
+        public async  Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req /*AddProductRequest request*/)
         {
             _logger.LogInformation("AddProduct function triggered.");
-            //_logger.LogInformation("");
 
+            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            AddProductRequest request = JsonSerializer.Deserialize<AddProductRequest>(requestBody);
 
-            return new OkObjectResult("Product added");
+            _logger.LogInformation(request.ToString());
+            ProductResponse response = _domainService.AddProduct(request);
+
+            return new OkObjectResult(response);
         }
     }
 }

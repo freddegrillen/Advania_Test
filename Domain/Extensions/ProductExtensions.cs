@@ -1,12 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Advania_Test.Domain.Contracts;
+using Advania_Test.Domain.Models;
+
 
 namespace Advania_Test.Domain.Extensions
 {
-    internal class ProductExtensions
+    public static class ProductExtensions
     {
+        public static Product ToEntity(this AddProductRequest request)
+        {
+            return new Product 
+            {
+                Name = request.Name,
+                Color = request.Color,
+                Price = request.Price,
+            };
+        }
+
+        public static ProductResponse ToResponse(this Product product)
+        {
+            return new ProductResponse
+            (
+                product.Id,
+                product.Name,
+                product.Color,
+                product.Price
+            );
+        }
+
+
     }
 }

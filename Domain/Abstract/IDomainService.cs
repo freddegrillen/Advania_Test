@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Advania_Test.Domain.Abstract
 {
-    internal interface IDomainService
+    public interface IDomainService
     {
         ProductResponse AddProduct(AddProductRequest request);
         IEnumerable<ProductResponse> GetProducts();
