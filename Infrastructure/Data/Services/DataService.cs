@@ -20,7 +20,7 @@ namespace Advania_Test.Infrastructure.Data.Services
             var entity = new TableEntity() {
                 {"PartitionKey", product.Category },
                 {"RowKey", product.Name },
-                {"Id", product.Id},
+               // {"Id", product.Id},
                 {"Color", product.Color },
                 {"Price", product.Price }
             };

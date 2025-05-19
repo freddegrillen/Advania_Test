@@ -8,7 +8,7 @@
     );
 
     public record ProductResponse(
-        int Id,
+       // int Id,
         string Name,
         string Category,
         string? Color,

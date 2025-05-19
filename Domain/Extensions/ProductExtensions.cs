@@ -21,7 +21,7 @@ namespace Advania_Test.Domain.Extensions
         {
             return new ProductResponse
             (
-                product.Id,
+               // product.Id,
                 product.Name,
                 product.Category,
                 product.Color,

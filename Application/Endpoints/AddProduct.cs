@@ -25,14 +25,16 @@ namespace Advania_Test.Application.Endpoints
         public async  Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req /*AddProductRequest request*/)
         {
             _logger.LogInformation("AddProduct function triggered.");
+  
 
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            AddProductRequest? request = JsonSerializer.Deserialize<AddProductRequest>(requestBody);
-            if(request == null)
+            if (string.IsNullOrEmpty(requestBody))
             {
                 _logger.LogError("request body is null.");
                 return new BadRequestObjectResult("Missing Request body");
             }
+            AddProductRequest? request = JsonSerializer.Deserialize<AddProductRequest>(requestBody);
+
 
             _logger.LogInformation(request.ToString()); //ta bort
             ProductResponse response = await _domainService.AddProduct(request);
