@@ -27,9 +27,14 @@ namespace Advania_Test.Application.Endpoints
             _logger.LogInformation("AddProduct function triggered.");
 
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            AddProductRequest request = JsonSerializer.Deserialize<AddProductRequest>(requestBody);
+            AddProductRequest? request = JsonSerializer.Deserialize<AddProductRequest>(requestBody);
+            if(request == null)
+            {
+                _logger.LogError("request body is null.");
+                return new BadRequestObjectResult("Missing Request body");
+            }
 
-            _logger.LogInformation(request.ToString());
+            _logger.LogInformation(request.ToString()); //ta bort
             ProductResponse response = _domainService.AddProduct(request);
 
             return new OkObjectResult(response);
