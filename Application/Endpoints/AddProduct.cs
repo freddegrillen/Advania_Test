@@ -35,7 +35,7 @@ namespace Advania_Test.Application.Endpoints
             }
 
             _logger.LogInformation(request.ToString()); //ta bort
-            ProductResponse response = _domainService.AddProduct(request);
+            ProductResponse response = await _domainService.AddProduct(request);
 
             return new OkObjectResult(response);
         }

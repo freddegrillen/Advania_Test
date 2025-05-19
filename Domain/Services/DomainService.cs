@@ -1,5 +1,6 @@
 ﻿using Advania_Test.Domain.Abstract;
 using Advania_Test.Domain.Contracts;
+using Advania_Test.Domain.Extensions;
 using Advania_Test.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -9,15 +10,18 @@ using System.Threading.Tasks;
 
 namespace Advania_Test.Domain.Services
 {
-    internal class DomainService: IDomainService
+    internal class DomainService(IDataService dataService): IDomainService
     {
 
-        public ProductResponse AddProduct(AddProductRequest request)
+        public async Task<ProductResponse> AddProduct(AddProductRequest request)
         {
-            return new ProductResponse(1, "Name","blue", 2.55m); //Fixa sen
+            Product product = request.ToEntity();
+            product = await dataService.AddProduct(product);
+
+            return product.ToResponse();
         }
 
-        public IEnumerable<ProductResponse> GetProducts()
+        public async Task<IEnumerable<ProductResponse>> GetProducts()
         {
             return new List<ProductResponse>();
         }

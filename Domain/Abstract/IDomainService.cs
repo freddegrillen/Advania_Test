@@ -9,7 +9,7 @@ namespace Advania_Test.Domain.Abstract
 {
     public interface IDomainService
     {
-        ProductResponse AddProduct(AddProductRequest request);
-        IEnumerable<ProductResponse> GetProducts();
+        Task<ProductResponse> AddProduct(AddProductRequest request);
+        Task<IEnumerable<ProductResponse>> GetProducts();
     }
 }
