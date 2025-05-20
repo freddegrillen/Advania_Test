@@ -10,22 +10,21 @@ using System.Threading.Tasks;
 
 namespace Advania_Test.Infrastructure.Data.Registrations
 {
-    public static class DataRegistrations
+    internal static class DataRegistrations
     {
-        public static IServiceCollection AddDataRegistration(this IServiceCollection services)
+        internal static IServiceCollection AddDataRegistration(this IServiceCollection services)
         {
             services.AddSingleton<TableClient>(provider =>
             {
-                var connectionString = Environment.GetEnvironmentVariable("Table_Storage_Connectionstring");
-                var tableName = "Products";
+                string connectionString = Environment.GetEnvironmentVariable("Table_Storage_Connectionstring")
+                    ?? throw new Exception("Connection string is missing.");
+                string tableName = "Products";
                 var client = new TableClient(connectionString, tableName);
                 client.CreateIfNotExists();
                 return client;
             });
             services.AddScoped<IDataService, DataService>();
-            //services.AddClient<TableClient>
-            //var TableClient = new TableClient(Environment.GetEnvironmentVariable("Table_Storage_Connectionstring"), "Products");
-            //await TableClient.CreateIfNotExistsAsync();
+
             return services;
         }
     }

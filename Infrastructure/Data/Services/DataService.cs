@@ -15,16 +15,14 @@ namespace Advania_Test.Infrastructure.Data.Services
     {
         public async Task<Product> AddProduct(Product product)
         {
-            Console.WriteLine("product price: " + product.Price);
             var entity = new TableEntity() {
                 {"PartitionKey", product.Category },
                 {"RowKey", product.Name },
-               // {"Id", product.Id},
                 {"Color", product.Color },
                 {"Price", product.Price.ToString() }
             };
 
-            tableClient.AddEntity(entity);
+            await tableClient.AddEntityAsync(entity);
 
             return product;
         }
@@ -37,7 +35,7 @@ namespace Advania_Test.Infrastructure.Data.Services
                 Category = e.GetString("PartitionKey"),
                 Name = e.GetString("RowKey"),
                 Color = e.GetString("Color"),
-                Price = decimal.Parse(e.GetString("Price")) //Kolla om det här fungerar bra, kan vara strul med att spara som double.
+                Price = decimal.Parse(e.GetString("Price"))
             }).ToList<Product>();
             return products;
         }

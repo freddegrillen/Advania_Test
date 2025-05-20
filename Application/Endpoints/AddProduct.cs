@@ -23,7 +23,7 @@ namespace Advania_Test.Application.Endpoints
         }
 
         [Function("AddProduct")]
-        public async  Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req /*AddProductRequest request*/)
+        public async  Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
         {
             _logger.LogInformation("AddProduct function triggered.");
   
@@ -36,17 +36,21 @@ namespace Advania_Test.Application.Endpoints
             }
             AddProductRequest? request = JsonSerializer.Deserialize<AddProductRequest>(requestBody);
 
-
             try
             {
                 ProductResponse response = await _domainService.AddProduct(request);
                 _logger.LogInformation("Product added successfully.");
                 return new OkObjectResult(response);
             }
-            catch(Exception e)
+            catch (ArgumentNullException e)
             {
                 _logger.LogError(e, "Error adding product: " + e.Message);
-                return new ObjectResult("Error adding product: " + e.Message);
+                return new BadRequestObjectResult("Error adding product: " + e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error adding product: " + e.Message);
+                return new ConflictObjectResult("Error adding product: " + e.Message);
             }
         }
     }

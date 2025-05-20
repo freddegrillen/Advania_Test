@@ -12,5 +12,5 @@
         string Category,
         string? Color,
         decimal Price
-        );
+    );
 

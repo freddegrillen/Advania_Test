@@ -8,7 +8,6 @@ namespace Advania_Test.Domain.Models
 {
     public sealed class Product
     {
-        //public int Id { get; set; } //Ta bort?
         public required string Category { get; set; }
         public required string Name { get; set; }
         public string? Color { get; set; }
