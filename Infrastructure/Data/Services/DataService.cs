@@ -14,9 +14,6 @@ namespace Advania_Test.Infrastructure.Data.Services
     {
         public async Task<Product> AddProduct(Product product)
         {
-
-            //var tableClient = new TableClient(Environment.GetEnvironmentVariable("Table_Storage_Connectionstring"), "Products");
-            //await tableClient.CreateIfNotExistsAsync();
             var entity = new TableEntity() {
                 {"PartitionKey", product.Category },
                 {"RowKey", product.Name },
@@ -40,7 +37,6 @@ namespace Advania_Test.Infrastructure.Data.Services
                 Price = (decimal) e.GetDouble("Price") //Kolla om det här fungerar bra, kan vara strul med att spara som double.
             }).ToList<Product>();
             return products;
-            //return new List<Product>(); //Lägg till implementation
         }
     }
 }
