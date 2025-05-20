@@ -11,16 +11,8 @@ using System.Text.Json;
 
 namespace Advania_Test.Application.Endpoints
 {
-    public class AddProduct
+    public class AddProduct(ILogger<AddProduct> _logger, IDomainService domainService)
     {
-        private readonly ILogger<AddProduct> _logger;
-        private readonly IDomainService _domainService;
-
-        public AddProduct(ILogger<AddProduct> logger, IDomainService domainService)
-        {
-            _logger = logger;
-            _domainService = domainService;
-        }
 
         [Function("AddProduct")]
         public async  Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
@@ -38,8 +30,8 @@ namespace Advania_Test.Application.Endpoints
 
             try
             {
-                ProductResponse response = await _domainService.AddProduct(request);
-                _logger.LogInformation("Product added successfully.");
+                ProductResponse response = await domainService.AddProduct(request);
+                _logger.LogInformation($"Product {response.Name} added successfully.");
                 return new OkObjectResult(response);
             }
             catch (ArgumentNullException e)

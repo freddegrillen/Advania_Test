@@ -8,14 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace Advania_Test.Application.Endpoints
 {
     public class GetProducts(ILogger<GetProducts> _logger, IDomainService domainService)
-    {
-        //private readonly ILogger<GetProducts> _logger;
-
-        //public GetProducts(ILogger<GetProducts> logger)
-        //{
-        //    _logger = logger;
-        //}
-
+    {  
         [Function("GetProducts")]
         public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequest req)
         {
