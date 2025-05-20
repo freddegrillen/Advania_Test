@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
+using System.Net;
 using System.Reflection;
 using System.Text.Json;
 
@@ -36,10 +37,17 @@ namespace Advania_Test.Application.Endpoints
             AddProductRequest? request = JsonSerializer.Deserialize<AddProductRequest>(requestBody);
 
 
-            _logger.LogInformation(request.ToString()); //ta bort
-            ProductResponse response = await _domainService.AddProduct(request);
-
-            return new OkObjectResult(response);
+            try
+            {
+                ProductResponse response = await _domainService.AddProduct(request);
+                _logger.LogInformation("Product added successfully.");
+                return new OkObjectResult(response);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, "Error adding product: " + e.Message);
+                return new ObjectResult("Error adding product: " + e.Message);
+            }
         }
     }
 }

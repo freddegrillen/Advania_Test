@@ -1,6 +1,7 @@
 ﻿using Advania_Test.Domain.Abstract;
 using Advania_Test.Domain.Models;
 using Azure.Data.Tables;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Advania_Test.Infrastructure.Data.Services
 {
-    internal class DataService(TableClient tableClient) : IDataService
+    internal class DataService(TableClient tableClient, ILogger<DataService> _logger) : IDataService
     {
         public async Task<Product> AddProduct(Product product)
         {
@@ -22,6 +23,7 @@ namespace Advania_Test.Infrastructure.Data.Services
                 {"Color", product.Color },
                 {"Price", product.Price.ToString() }
             };
+
             tableClient.AddEntity(entity);
 
             return product;
