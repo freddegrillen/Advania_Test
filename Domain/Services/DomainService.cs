@@ -26,9 +26,9 @@ namespace Advania_Test.Domain.Services
             return product.ToResponse();
         }
 
-        public async Task<IEnumerable<ProductResponse>> GetProducts()
+        public IEnumerable<ProductResponse> GetProducts()
         {
-            IEnumerable<Product> products = await dataService.GetProducts();
+            IEnumerable<Product> products = dataService.GetProducts();
             return products.Select(p => p.ToResponse());
         }
     }

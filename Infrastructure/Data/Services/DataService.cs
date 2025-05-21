@@ -23,20 +23,21 @@ namespace Advania_Test.Infrastructure.Data.Services
             };
 
             await tableClient.AddEntityAsync(entity);
+            _logger.LogInformation("Entity stored in table storage.");
 
             return product;
         }
 
-        public async Task<IEnumerable<Product>> GetProducts()
+        public IEnumerable<Product> GetProducts()
         {
-            List<TableEntity> entities = tableClient.Query<TableEntity>(maxPerPage: 1000).ToList<TableEntity>();
+            List<TableEntity> entities = tableClient.Query<TableEntity>().ToList();
             List<Product> products = entities.Select(e => new Product
             {
                 Category = e.GetString("PartitionKey"),
                 Name = e.GetString("RowKey"),
                 Color = e.GetString("Color"),
                 Price = decimal.Parse(e.GetString("Price"))
-            }).ToList<Product>();
+            }).ToList();
             return products;
         }
     }
