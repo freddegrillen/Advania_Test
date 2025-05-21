@@ -1,12 +1,9 @@
 using Advania_Test.Domain.Abstract;
 using Advania_Test.Domain.Contracts;
-using Advania_Test.Domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
-using System.Net;
-using System.Reflection;
 using System.Text.Json;
 
 namespace Advania_Test.Application.Endpoints
@@ -31,8 +28,8 @@ namespace Advania_Test.Application.Endpoints
             try
             {
                 ProductResponse response = await domainService.AddProduct(request);
-                _logger.LogInformation($"Product {response.Name} added successfully.");
-                return new OkObjectResult(response);
+                _logger.LogInformation($"Product added successfully.");
+                return new OkObjectResult($"Product '{response.Name}' added successfully.");
             }
             catch (ArgumentNullException e)
             {

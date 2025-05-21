@@ -2,12 +2,7 @@
 using Advania_Test.Domain.Models;
 using Azure.Data.Tables;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Advania_Test.Infrastructure.Data.Services
 {
