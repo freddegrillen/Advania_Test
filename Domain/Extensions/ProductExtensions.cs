@@ -6,7 +6,7 @@ namespace Advania_Test.Domain.Extensions
 {
     public static class ProductExtensions
     {
-        public static Product ToEntity(this AddProductRequest request)
+        public static Product ToProduct(this AddProductRequest request)
         {
             return new Product 
             {

@@ -9,7 +9,7 @@ namespace Advania_Test.Infrastructure.Data.Registrations
     {
         internal static IServiceCollection AddDataRegistration(this IServiceCollection services)
         {
-            services.AddSingleton<TableClient>(provider =>
+            services.AddScoped<TableClient>(provider =>
             {
                 string connectionString = Environment.GetEnvironmentVariable("Table_Storage_Connectionstring")
                     ?? throw new Exception("Connection string is missing.");

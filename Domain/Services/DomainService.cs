@@ -10,12 +10,12 @@ namespace Advania_Test.Domain.Services
 
         public async Task<ProductResponse> AddProduct(AddProductRequest request)
         {
-            if(string.IsNullOrEmpty(request.Name) || string.IsNullOrEmpty(request.Category))
+            if (string.IsNullOrEmpty(request.Name) || string.IsNullOrEmpty(request.Category))
             {
                 throw new ArgumentNullException("Product name and category cannot be null.");
             }
 
-            Product product = request.ToEntity();
+            Product product = request.ToProduct();
             await dataService.AddProduct(product);
 
             return product.ToResponse();
