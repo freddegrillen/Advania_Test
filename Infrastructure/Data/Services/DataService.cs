@@ -23,16 +23,22 @@ namespace Advania_Test.Infrastructure.Data.Services
             return product;
         }
 
-        public IEnumerable<Product> GetProducts()
+        public async Task<IEnumerable<Product>> GetProducts()
         {
-            List<TableEntity> entities = tableClient.Query<TableEntity>().ToList();
-            List<Product> products = entities.Select(e => new Product
+            var entities = tableClient.QueryAsync<TableEntity>();
+            List<Product> products = new List<Product>();
+
+            await foreach(var e in entities)
             {
-                Category = e.GetString("PartitionKey"),
-                Name = e.GetString("RowKey"),
-                Color = e.GetString("Color"),
-                Price = decimal.Parse(e.GetString("Price"))
-            }).ToList();
+                products.Add(new Product
+                {
+                    Category = e.GetString("PartitionKey"),
+                    Name = e.GetString("RowKey"),
+                    Color = e.GetString("Color"),
+                    Price = decimal.Parse(e.GetString("Price"))
+                });
+            }
+
             return products;
         }
     }

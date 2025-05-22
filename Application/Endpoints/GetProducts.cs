@@ -10,10 +10,10 @@ namespace Advania_Test.Application.Endpoints
     public class GetProducts(ILogger<GetProducts> _logger, IDomainService domainService)
     {  
         [Function("GetProducts")]
-        public IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequest req)
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequest req)
         {
             _logger.LogInformation("GetProducts triggered.");
-            IEnumerable<ProductResponse> response = domainService.GetProducts();
+            IEnumerable<ProductResponse> response = await domainService.GetProducts();
             return new OkObjectResult(response);
         }
     }
