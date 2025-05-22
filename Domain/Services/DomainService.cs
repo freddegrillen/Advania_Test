@@ -10,7 +10,7 @@ namespace Advania_Test.Domain.Services
 
         public async Task<ProductResponse> AddProduct(AddProductRequest request)
         {
-            if(request.Name is null || request.Category is null)
+            if(string.IsNullOrEmpty(request.Name) || string.IsNullOrEmpty(request.Category))
             {
                 throw new ArgumentNullException("Product name and category cannot be null.");
             }

@@ -33,8 +33,8 @@ namespace Advania_Test.Application.Endpoints
             }
             catch (ArgumentNullException e)
             {
-                _logger.LogError(e, "Error adding product: " + e.Message);
-                return new BadRequestObjectResult("Error adding product: " + e.Message);
+                _logger.LogError(/*e, */"Error adding product: " + e.Message);
+                return new BadRequestObjectResult("Error adding product: Product must have Name and Category");
             }
             catch (Exception e)
             {
