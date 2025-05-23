@@ -18,7 +18,7 @@ namespace Advania_Test.Infrastructure.Data.Services
             };
 
             await tableClient.AddEntityAsync(entity);
-            _logger.LogInformation("Entity stored in table storage.");
+            _logger.LogInformation("Entity stored in table storage{category}.",product.Category);
 
             return product;
         }
